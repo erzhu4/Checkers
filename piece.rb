@@ -5,10 +5,12 @@ class Piece
   attr_reader :color, :dirs
   attr_accessor :pos
 
-  def initialize(board, color)
+  def initialize(board, color, pos)
     @board = board
     @color = color
+    @pos = pos
     @dirs = ((@color == :red) ? [[-1, -1], [-1, 1]] : [[1, -1], [1, 1]] )
+    nil
   end
 
   def valid_slides ######### returns array of valide slide positions
@@ -46,11 +48,10 @@ class Piece
       @board[current_pos] = nil
     end
 
-    return nil
   end
 
   def perform_jump(destination) ## Called by Board
-    
+
     if self.valid_jumps.include?(destination)
         current_pos = @pos
         @board[destination] = self
@@ -77,9 +78,7 @@ class Piece
   end
 
   def dup_piece(board, color, new_pos)
-    dup = Piece.new(board, color)
-    dup.pos = new_pos
-    dup
+    Piece.new(board, color, new_pos)
   end
 
 

@@ -28,10 +28,10 @@ class Board
     end
     if commands.length == 2 # handles basic cases where theres only one command to slide.
       raise "Invalid move selection" unless piece.valid_slides.include?(command) || piece.valid_jumps.include?(command)
-        piece.perform_slide(command)
-        piece.perform_jump(command)
+      piece.perform_jump(command) # <--- Had to do it this way or else Error wouldn't raise for certain situations :(
+      piece.perform_slide(command)
       return nil
-    end ############# current test block below
+    end
 
     if piece.valid_jumps.include?(command)  #tests if player tried to make a normal move after jump
       test_piece = piece.dup_piece(self, piece.color, command)
@@ -42,6 +42,11 @@ class Board
 
     nil
   end
+
+
+  # def return_pieces(color) # returns an array of all pieces of a certain color
+  #   @grid.flatten.compact.select { |piece| }
+  # end
 
 
 
