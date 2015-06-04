@@ -31,30 +31,32 @@ class Piece
 
       unless neighbor.nil?
         jumps << jump if jump.all?{|x| x.between?(0, 7)} && @board[jump].nil? && neighbor.color != @color
-      end###end of unless
+      end
 
-    end##end of each loop
+    end
 
     jumps
   end
 
   def perform_slide(destination) ## Called by Board
-    raise InvalidMoveError unless self.valid_slides.include?(destination)
 
-    current_pos = @pos
-    @board[destination] = self
-    @board[current_pos] = nil
+    if self.valid_slides.include?(destination)
+      current_pos = @pos
+      @board[destination] = self
+      @board[current_pos] = nil
+    end
 
     return nil
   end
 
   def perform_jump(destination) ## Called by Board
-    raise InvalidMoveError unless self.valid_jumps.include?(destination)
-
-    current_pos = @pos
-    @board[destination] = self
-    @board[current_pos] = nil
-    @board[get_between(current_pos, destination)] = nil
+    
+    if self.valid_jumps.include?(destination)
+        current_pos = @pos
+        @board[destination] = self
+        @board[current_pos] = nil
+        @board[get_between(current_pos, destination)] = nil
+      end
 
     return nil
   end
@@ -63,6 +65,8 @@ class Piece
     (@color == :red) ? "r" : "b" #test cases only
   end
 
+###############  Piece helper methods  #########
+
   def get_between(current_location, destination)
 
     x = ((destination[0] - current_location[0]) / 2) + current_location[0]
@@ -70,6 +74,12 @@ class Piece
 
     [x, y]
 
+  end
+
+  def dup_piece(board, color, new_pos)
+    dup = Piece.new(board, color)
+    dup.pos = new_pos
+    dup
   end
 
 
