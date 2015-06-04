@@ -44,9 +44,9 @@ class Board
   end
 
 
-  # def return_pieces(color) # returns an array of all pieces of a certain color
-  #   @grid.flatten.compact.select { |piece| }
-  # end
+  def return_pieces(color) # returns an array of all pieces of a certain color
+    @grid.flatten.compact.select { |piece| piece.color == color }
+  end
 
 
 
