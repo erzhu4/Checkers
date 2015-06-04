@@ -1,5 +1,5 @@
 require_relative 'board'
-
+require 'byebug'
 class Piece
 
   attr_reader :color, :dirs
@@ -38,10 +38,48 @@ class Piece
     jumps
   end
 
-  def mark
+  def perform_slide(destination) ## Called by Board
+    raise InvalidMoveError unless self.valid_slides.include?(destination)
 
+    current_pos = @pos
+    @board[destination] = self
+    @board[current_pos] = nil
+
+    return nil
+  end
+
+  def perform_jump(destination) ## Called by Board
+    raise InvalidMoveError unless self.valid_jumps.include?(destination)
+
+    current_pos = @pos
+    @board[destination] = self
+    @board[current_pos] = nil
+    @board[get_between(current_pos, destination)] = nil
+
+    return nil
+  end
+
+  def mark
     (@color == :red) ? "r" : "b" #test cases only
+  end
+
+  def get_between(current_location, destination)
+
+    x = ((destination[0] - current_location[0]) / 2) + current_location[0]
+    y = ((destination[1] - current_location[1]) / 2) + current_location[1]
+
+    [x, y]
 
   end
 
+
 end######################################end of class
+
+
+class InvalidMoveError
+  def message
+    "Not a valid command!!!!!"
+  end
+end
+
+#####test area
