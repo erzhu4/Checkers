@@ -21,17 +21,24 @@ class Game
     self.set_players
     until @board.winner?
       self.turn
+      self.change_current_player
     end
+    winner = (@current_player == @player1) ? @player2 : @player1
+    puts " #{winner.name} is the winner!!!!"
+    puts "Thanks for playing."
   end
 
   def turn
       puts "#{@current_player.name}'s turn"
     begin
-      @board.move(@current_player.get_move)
-    rescue
+      command = @current_player.get_move
+      raise InvalidPieceError if @board[command[0]] && @board[command[0]].color != @current_player.color
+      @board.move(command)
+      @board.display
+    rescue CheckersError => error
+      puts error.message
       retry
     end
-      @board.display
 
   end
 

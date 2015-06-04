@@ -26,9 +26,3 @@ class HumanPlayer
 
 
 end############################# end of HumanPlayer class
-
-class InputError
-  def message
-    "Please enter input correctly."
-  end
-end

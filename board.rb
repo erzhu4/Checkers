@@ -42,10 +42,10 @@ class Board
     piece = self[commands[0]]
     command = commands[1]
     if piece == nil || commands.length <= 1 #handles imcomplete input by not doing anything.
-      raise "Invalid piece selection"
+      raise InvalidPieceError
     end
     if commands.length == 2 # handles basic cases where theres only one command to slide.
-      raise "Invalid move selection" unless piece.valid_slides.include?(command) || piece.valid_jumps.include?(command)
+      raise MoveError unless piece.valid_slides.include?(command) || piece.valid_jumps.include?(command)
       piece.perform_jump(command) # <--- Had to do it this way or else Error wouldn't raise for certain situations :(
       piece.perform_slide(command)
       return nil
@@ -53,7 +53,7 @@ class Board
 
     if piece.valid_jumps.include?(command)  #tests if player tried to make a normal move after jump
       test_piece = piece.dup_piece(self, piece.color, command)
-      raise "Can't make that move." if test_piece.valid_slides.include?(commands[2])
+      raise MoveError if test_piece.valid_slides.include?(commands[2])
     end
     piece.perform_jump(command)
     self.move(commands[1..-1])
