@@ -63,7 +63,7 @@ class Piece
   end
 
   def mark
-    (@color == :red) ? "r" : "b" #test cases only
+    (@color == :red) ? "☺" : "☻" #test cases only
   end
 
 ###############  Piece helper methods  #########
