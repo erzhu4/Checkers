@@ -7,7 +7,7 @@ class HumanPlayer
     @color = color
   end
 
-  def get_move # takes string from human and converts to commands array
+  def get_move # takes string from human and converts to commands array for the Board#move method
     puts "Please enter your move in the following format: "
     puts "##,## separate by ',' for multi-jumps."
     input = gets.chomp

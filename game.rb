@@ -35,7 +35,7 @@ class Game
       raise InvalidPieceError if @board[command[0]] && @board[command[0]].color != @current_player.color
       @board.move(command)
       @board.display
-    rescue CheckersError => error
+    rescue CheckersError => error #all errors are caught here
       puts error.message
       retry
     end

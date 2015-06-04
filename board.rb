@@ -1,5 +1,3 @@
-require_relative 'piece'
-require 'byebug'
 
 class Board
   BOARD_DIMNSION = 8
@@ -72,6 +70,7 @@ class Board
   end
 
   def display
+    promote_king
      puts "  0 1 2 3 4 5 6 7"
     @grid.each_with_index do |row, idx|
       print idx
@@ -88,8 +87,22 @@ class Board
     return nil
   end
 
-  ################ Helper functions for Board ####################
 
+  def promote_king
+    @grid[0].compact.each do |piece|
+      position = piece.pos
+      if piece.color == :red
+        self[position] = King.new(self, :red, position)
+      end
+    end
+    @grid[7].compact.each do |piece|
+      position = piece.pos
+      if piece.color == :black
+        self[position] = King.new(self, :black, position)
+      end
+    end
+    nil
+  end
 
 end#############end of class
 

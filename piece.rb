@@ -1,5 +1,3 @@
-require_relative 'board'
-require 'byebug'
 class Piece
 
   attr_reader :color, :dirs
@@ -9,14 +7,17 @@ class Piece
     @board = board
     @color = color
     @pos = pos
-    @dirs = ((@color == :red) ? [[-1, -1], [-1, 1]] : [[1, -1], [1, 1]] )
-    nil
+  end
+
+  def get_dirs
+    return [[-1, -1], [-1, 1]] if @color == :red
+    return [[1, -1], [1, 1]] if @color == :black
   end
 
   def valid_slides ######### returns array of valide slide positions
 
     slides = []
-    @dirs.each do |dir|
+    get_dirs.each do |dir|
       move = [@pos[0] + dir[0], @pos[1] + dir[1]]
       slides << move if move.all?{|x| x.between?(0, 7)} && @board[move].nil?
     end
@@ -27,7 +28,7 @@ class Piece
   def valid_jumps########## returns array of valid jump positions
 
     jumps = []
-    @dirs.each do |dir|
+    get_dirs.each do |dir|
       neighbor = @board[ [@pos[0] + dir[0], @pos[1] + dir[1]] ]
       jump = [@pos[0] + 2 * dir[0], @pos[1] + 2 * dir[1]]
 
@@ -63,7 +64,7 @@ class Piece
   end
 
   def mark
-    (@color == :red) ? "☺" : "☻" #test cases only
+    (@color == :red) ? "☺" : "☻"
   end
 
 ###############  Piece helper methods  #########
@@ -82,13 +83,24 @@ class Piece
   end
 
 
-end######################################end of class
+end######################################end of Piece class
 
+class King < Piece
 
-class InvalidMoveError
-  def message
-    "Not a valid command!!!!!"
+  def initialize(board, color, pos)
+    super(board, color, pos)
   end
-end
 
-#####test area
+  def get_dirs
+    [[-1, -1], [-1, 1], [1, -1], [1, 1]]
+  end
+
+  def dup_piece(board, color, new_pos)
+    King.new(board, color, new_pos)
+  end
+
+  def mark
+    (@color == :red) ? "♔" : "♚"
+  end
+
+end#########################end of King class
