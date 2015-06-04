@@ -1,6 +1,6 @@
 
 class Board
-  BOARD_DIMNSION = 8
+  BOARD_DIMNSION = 7
 
   attr_accessor :grid
 
@@ -24,7 +24,7 @@ class Board
         if row_idx.between?(0, 2)
           row.do_if_odd {|square, col_idx| @grid[row_idx][col_idx] = Piece.new(self, :black, [row_idx, col_idx])} if row_idx.even?
           row.do_if_even {|square, col_idx| self[[row_idx, col_idx]] = Piece.new(self, :black, [row_idx, col_idx])} if row_idx.odd?
-        elsif row_idx.between?(5,7)
+        elsif row_idx.between?(BOARD_DIMNSION - 2,BOARD_DIMNSION)
           row.do_if_even {|square, col_idx| @grid[row_idx][col_idx] = Piece.new(self, :red, [row_idx, col_idx])} if row_idx.odd?
           row.do_if_odd {|square, col_idx| self[[row_idx, col_idx]] = Piece.new(self, :red, [row_idx, col_idx])} if row_idx.even?
         else
@@ -54,7 +54,7 @@ class Board
       raise MoveError if test_piece.valid_slides.include?(commands[2])
     end
     piece.perform_jump(command)
-    self.move(commands[1..-1])
+    self.move(commands[1..-1]) ## Recusively handles and infinite amount of possible double jumps.
 
     nil
   end
@@ -95,7 +95,7 @@ class Board
         self[position] = King.new(self, :red, position)
       end
     end
-    @grid[7].compact.each do |piece|
+    @grid[BOARD_DIMNSION].compact.each do |piece|
       position = piece.pos
       if piece.color == :black
         self[position] = King.new(self, :black, position)

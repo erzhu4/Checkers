@@ -33,16 +33,16 @@ class Game
     puts "##,## <--- first number pair denote piece to move, next is move destination."
     puts "If doing a multi-jump, add more number pairs separated by ',' like so: ##,##,##,##...etc"
   end
-
+####################################################################################
   def set_computer_players## this sets two computer players against each other, replace "self.set_players" line with this to watch computers play.
     @player1 = ComputerPlayer.new(@board, :red)
     @player2 = ComputerPlayer.new(@board, :black)
     @current_player = @player1
   end
-
+####################################### still has bugs with two computer players
   def play
-    #self.set_players          # Only uncomment one of these two lines.
-    self.set_computer_players  # Uncomment this line to have two computer players
+    self.set_players          # Only uncomment one of these two lines.
+    #self.set_computer_players  # Uncomment this line to have two computer players
     until @board.winner?
       self.turn
       self.change_current_player
@@ -57,6 +57,8 @@ class Game
       command = @current_player.get_move
       raise InvalidPieceError if @board[command[0]] && @board[command[0]].color != @current_player.color
       @board.move(command)
+      #system("clear")
+      sleep(0.1)
       @board.display
     rescue CheckersError => error #all game play errors are caught here
       puts error.message

@@ -19,7 +19,7 @@ class Piece
     slides = []
     get_dirs.each do |dir|
       move = [@pos[0] + dir[0], @pos[1] + dir[1]]
-      slides << move if move.all?{|x| x.between?(0, 7)} && @board[move].nil?
+      slides << move if move.all?{|x| x.between?(0, Board::BOARD_DIMNSION)} && @board[move].nil?
     end
 
     slides
@@ -29,11 +29,11 @@ class Piece
 
     jumps = []
     get_dirs.each do |dir|
-      neighbor = @board[ [@pos[0] + dir[0], @pos[1] + dir[1]] ] unless @board[ [@pos[0] + dir[0], @pos[1] + dir[1]] ] #test purpose only
+      neighbor = @board[ [@pos[0] + dir[0], @pos[1] + dir[1]] ]
       jump = [@pos[0] + 2 * dir[0], @pos[1] + 2 * dir[1]]
 
       unless neighbor.nil?
-        jumps << jump if jump.all?{|x| x.between?(0, 7)} && @board[jump].nil? && neighbor.color != @color
+        jumps << jump if jump.all?{|x| x.between?(0, Board::BOARD_DIMNSION)} && @board[jump].nil? && neighbor.color != @color
       end
 
     end
