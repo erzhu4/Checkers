@@ -49,7 +49,7 @@ class Board
       return nil
     end
 
-    if piece.valid_jumps.include?(command)  #tests if player tried to make a normal move after jump
+    if piece.valid_jumps.include?(command)  #tests if player tried to make a sliding move after jump.
       test_piece = piece.dup_piece(self, piece.color, command)
       raise MoveError if test_piece.valid_slides.include?(commands[2])
     end
@@ -60,7 +60,7 @@ class Board
   end
 
 
-  def return_pieces(color) # returns an array of all pieces of a certain color <-- for use in ComputerPLayer class
+  def return_pieces(color) # returns an array of all pieces of a certain color <-- for use in ComputerPlayer class
     @grid.flatten.compact.select { |piece| piece.color == color }
   end
 

@@ -29,7 +29,7 @@ class Piece
 
     jumps = []
     get_dirs.each do |dir|
-      neighbor = @board[ [@pos[0] + dir[0], @pos[1] + dir[1]] ]
+      neighbor = @board[ [@pos[0] + dir[0], @pos[1] + dir[1]] ] unless @board[ [@pos[0] + dir[0], @pos[1] + dir[1]] ] #test purpose only
       jump = [@pos[0] + 2 * dir[0], @pos[1] + 2 * dir[1]]
 
       unless neighbor.nil?

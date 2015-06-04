@@ -21,3 +21,9 @@ class InvalidPieceError < CheckersError
     "Not a valid piece to move. "
   end
 end
+
+class PlayerSelectError < CheckersError
+  def message
+    "Please enter y or n"
+  end
+end
