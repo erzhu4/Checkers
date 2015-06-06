@@ -41,8 +41,8 @@ class Game
   end
 ####################################### still has bugs with two computer players
   def play
-    self.set_players          # Only uncomment one of these two lines.
-    #self.set_computer_players  # Uncomment this line to have two computer players
+    #self.set_players          # Only uncomment one of these two lines.
+    self.set_computer_players  # Uncomment this line to have two computer players
     until @board.winner?
       self.turn
       self.change_current_player

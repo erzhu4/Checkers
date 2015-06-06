@@ -29,6 +29,7 @@ class Piece
 
     jumps = []
     get_dirs.each do |dir|
+      next unless [@pos[0] + dir[0], @pos[1] + dir[1]].all?{|x| x.between?(0,7)}
       neighbor = @board[ [@pos[0] + dir[0], @pos[1] + dir[1]] ]
       jump = [@pos[0] + 2 * dir[0], @pos[1] + 2 * dir[1]]
 
