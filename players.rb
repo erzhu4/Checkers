@@ -55,7 +55,7 @@ class ComputerPlayer
       commands_arr << move_piece.pos << move_piece.valid_jumps.sample
     else
       move_piece = movable_pieces.sample
-      commands_arr << move_piece.pos << move_piece.valid_slides.sample
+      commands_arr << move_piece.pos << move_piece.valid_slides.sample unless move_piece.pos.nil?
     end
     commands_arr
 
