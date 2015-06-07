@@ -48,7 +48,7 @@ class Game
       self.change_current_player
     end
     winner = (@current_player == @player1) ? @player2 : @player1
-    puts " #{winner.name} is the winner!!!!"
+    puts " #{winner.color.to_s.upcase} is the winner!!!!"
     puts "Thanks for playing."
   end
 
